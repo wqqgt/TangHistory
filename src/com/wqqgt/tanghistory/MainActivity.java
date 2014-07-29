@@ -69,6 +69,7 @@ public class MainActivity extends Activity implements OnClickListener {
     value.put(DBHelper.CLOUMN_TYPE, type);
     getContentResolver().insert(TangContentProvider.TANG_CONTENT_URI, value);
     showAddMsg(type);
+    initHistoryListAdapter();
   }
 
   public void showAddMsg(int type) {
@@ -88,7 +89,7 @@ public class MainActivity extends Activity implements OnClickListener {
               DBHelper.CLOUMN_TYPE + "=?", new String[] {Integer.toString(curType)},
               null);
       if (c != null && c.moveToNext()) {
-        adapterData.add(getTypeName(curType)+" ("+c.getColumnCount()+") ");
+        adapterData.add(getTypeName(curType)+" ("+c.getCount()+") ");
       }
     }
     mAdapter.setData(adapterData);
