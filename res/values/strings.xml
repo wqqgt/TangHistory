@@ -3,6 +3,10 @@
 
     <string name="app_name">TangHistory</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
+    
+    <string name="title_shit">shit</string>
+    <string name="title_pee">pee</string>
+    <string name="title_sleep">sleep</string>
+    <string name="title_drink">drink</string>
+    <string name="title_history">history</string>
 </resources>
