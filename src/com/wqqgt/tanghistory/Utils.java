@@ -1,5 +1,7 @@
 package com.wqqgt.tanghistory;
 
+import android.content.Context;
+
 public class Utils {
 	
     public static final int TYPE_BEGIN = 1;
@@ -12,4 +14,43 @@ public class Utils {
 	public static final int[] typeArray = {
 	  TYPE_SHIT, TYPE_PEE,TYPE_SLEEP,TYPE_DRINK
 	};
+	
+    public static final int getTypeByPos(int position) {
+      int type = TYPE_BEGIN;
+      if (position == 0) {
+        type = TYPE_SHIT;
+      } else if (position == 1) {
+        type = TYPE_PEE;
+      } else if (position == 2) {
+        type = TYPE_SLEEP;
+      } else if (position == 3) {
+        type = TYPE_DRINK;
+      }
+      return type;
+    }
+    
+    public static final String getTypeName(Context context, int type) {
+      String name= new String();
+      switch(type) {
+        case Utils.TYPE_SHIT:{
+          name = context.getResources().getString(R.string.title_shit);
+          break;
+        }
+        case Utils.TYPE_PEE:{
+          name = context.getResources().getString(R.string.title_pee);
+          break;
+        }
+        case Utils.TYPE_SLEEP:{
+          name = context.getResources().getString(R.string.title_sleep);
+          break;
+        }
+        case Utils.TYPE_DRINK:{
+          name = context.getResources().getString(R.string.title_drink);
+          break;
+        }
+        default:
+          break;
+      }
+      return name;
+    }
 }

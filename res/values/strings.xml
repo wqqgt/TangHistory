@@ -9,4 +9,5 @@
     <string name="title_sleep">sleep</string>
     <string name="title_drink">drink</string>
     <string name="title_history">history</string>
+    <string name="item_detail">detail</string>
 </resources>

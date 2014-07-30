@@ -22,7 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.wqqgt.tanghistory.DetailActivity"
+            android:label="@string/item_detail" >
+        </activity>
+
         <provider android:name=".TangContentProvider"
+            android:exported="false"
             android:authorities="com.wqqgt.providers.tangcontentprovider">
             
         </provider>

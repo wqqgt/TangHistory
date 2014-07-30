@@ -40,8 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
     });
 
     mShowHistoryList = (ListView) findViewById(R.id.show_today);
-    mAdapter = new HistoryListAdapter(getApplicationContext());
-    initHistoryListAdapter();
+    mAdapter = new HistoryListAdapter(this);
     mShowHistoryList.setAdapter(mAdapter);
   }
 
@@ -79,46 +78,6 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   }
 
-  public void initHistoryListAdapter() {
-    ArrayList<String> adapterData = new ArrayList<String>();
-    for (int i = 0; i < Utils.typeArray.length; i++) {
-      int curType = Utils.typeArray[i];
-      Cursor c =
-          getContentResolver().query(TangContentProvider.TANG_CONTENT_URI, null,
-              DBHelper.CLOUMN_TYPE + "=?", new String[] {Integer.toString(curType)},
-              null);
-      if (c != null && c.moveToNext()) {
-        adapterData.add(getTypeName(curType)+" ("+c.getCount()+") ");
-      }
-    }
-    mAdapter.setData(adapterData);
-  }
-  
-  public String getTypeName(int type) {
-    String name= new String();
-    switch(type) {
-      case Utils.TYPE_SHIT:{
-        name = getResources().getString(R.string.title_shit);
-        break;
-      }
-      case Utils.TYPE_PEE:{
-        name = getResources().getString(R.string.title_pee);
-        break;
-      }
-      case Utils.TYPE_SLEEP:{
-        name = getResources().getString(R.string.title_sleep);
-        break;
-      }
-      case Utils.TYPE_DRINK:{
-        name = getResources().getString(R.string.title_drink);
-        break;
-      }
-      default:
-        break;
-    }
-    return name;
-  }
-  
   public void changeDateHistory(int pos) {
     ArrayList<String> adapterData = new ArrayList<String>();
     for (int i = 0; i < Utils.typeArray.length; i++) {
@@ -145,11 +104,11 @@ public class MainActivity extends Activity implements OnClickListener {
                     + " day')", new String[] {Integer.toString(curType)}, null);
       }
       if (c != null && c.moveToNext()) {
-        adapterData.add(getTypeName(curType) + " (" + c.getCount() + ") ");
+        adapterData.add(Utils.getTypeName(this,curType) + " (" + c.getCount() + ") ");
         c.close();
       }
     }
-    mAdapter.setData(adapterData);
+    mAdapter.setData(adapterData, pos);
   }
 
 }

@@ -11,9 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class HistoryListAdapter extends BaseAdapter implements OnClickListener {
+public class HistoryListAdapter extends BaseAdapter {
   private ArrayList<String> mData = new ArrayList<String>();
   private LayoutInflater mInflater;
+  private Context mAppContext;
+  private int mCurrentDate;
 
   private class ViewHolder {
     public TextView info;
@@ -23,6 +25,7 @@ public class HistoryListAdapter extends BaseAdapter implements OnClickListener {
   public HistoryListAdapter(Context context) {
     super();
     mInflater = LayoutInflater.from(context);
+    mAppContext = context;
   }
   
   @Override
@@ -43,6 +46,7 @@ public class HistoryListAdapter extends BaseAdapter implements OnClickListener {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ViewHolder holder;
+    final int pos = position;
     if (convertView == null) {
       holder = new ViewHolder();
       convertView = mInflater.inflate(R.layout.history_list_item, parent, false);
@@ -53,19 +57,19 @@ public class HistoryListAdapter extends BaseAdapter implements OnClickListener {
       holder = (ViewHolder)convertView.getTag();
     }
     holder.info.setText(mData.get(position));
-    holder.detail.setOnClickListener(this);
+    holder.detail.setOnClickListener(new OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        DetailActivity.startSelf(mAppContext, Utils.getTypeByPos(pos), mCurrentDate);
+      }
+    });
     return convertView;
   }
   
-  public void setData(ArrayList<String> data) {
+  public void setData(ArrayList<String> data, int date) {
     mData = data;
+    mCurrentDate = date;
     notifyDataSetChanged();
   }
-
-  @Override
-  public void onClick(View v) {
-    // TODO Auto-generated method stub
-    
-  }
-
 }

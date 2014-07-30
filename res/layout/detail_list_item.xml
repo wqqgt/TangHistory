@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
-    <TextView android:id="@+id/db_info"
+    <TextView android:id="@+id/db_detail_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:textSize="20sp"
+        android:text="@string/action_settings"
+        android:gravity="left|center_vertical" />
+    <TextView android:id="@+id/db_detail_time"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textSize="20sp"
+        android:text="@string/action_settings"
         android:gravity="left|center_vertical" />
-    <Button android:id="@+id/btn_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:text="@string/item_detail" />
 </LinearLayout>
