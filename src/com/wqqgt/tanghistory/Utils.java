@@ -15,20 +15,6 @@ public class Utils {
 	  TYPE_SHIT, TYPE_PEE,TYPE_SLEEP,TYPE_DRINK
 	};
 	
-    public static final int getTypeByPos(int position) {
-      int type = TYPE_BEGIN;
-      if (position == 0) {
-        type = TYPE_SHIT;
-      } else if (position == 1) {
-        type = TYPE_PEE;
-      } else if (position == 2) {
-        type = TYPE_SLEEP;
-      } else if (position == 3) {
-        type = TYPE_DRINK;
-      }
-      return type;
-    }
-    
     public static final String getTypeName(Context context, int type) {
       String name= new String();
       switch(type) {

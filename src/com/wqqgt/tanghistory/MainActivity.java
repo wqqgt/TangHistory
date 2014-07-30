@@ -79,7 +79,8 @@ public class MainActivity extends Activity implements OnClickListener {
   }
 
   public void changeDateHistory(int pos) {
-    ArrayList<String> adapterData = new ArrayList<String>();
+    ArrayList<HistoryListAdapter.HistoryItem> adapterData = 
+        new ArrayList<HistoryListAdapter.HistoryItem>();
     for (int i = 0; i < Utils.typeArray.length; i++) {
       int curType = Utils.typeArray[i];
       Cursor c;
@@ -104,7 +105,8 @@ public class MainActivity extends Activity implements OnClickListener {
                     + " day')", new String[] {Integer.toString(curType)}, null);
       }
       if (c != null && c.moveToNext()) {
-        adapterData.add(Utils.getTypeName(this,curType) + " (" + c.getCount() + ") ");
+        adapterData.add(new HistoryListAdapter.HistoryItem(
+            Utils.getTypeName(this,curType) + " (" + c.getCount() + ") ",curType));
         c.close();
       }
     }

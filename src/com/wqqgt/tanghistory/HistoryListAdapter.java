@@ -12,7 +12,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class HistoryListAdapter extends BaseAdapter {
-  private ArrayList<String> mData = new ArrayList<String>();
+  
+  public static class HistoryItem {
+    public String mInfo;
+    public int mType;
+    public HistoryItem(String info, int type) {
+      mInfo = info;
+      mType = type;
+    }
+  }
+  
+  private ArrayList<HistoryItem> mData = new ArrayList<HistoryItem>();
   private LayoutInflater mInflater;
   private Context mAppContext;
   private int mCurrentDate;
@@ -56,18 +66,18 @@ public class HistoryListAdapter extends BaseAdapter {
     } else {
       holder = (ViewHolder)convertView.getTag();
     }
-    holder.info.setText(mData.get(position));
+    holder.info.setText(mData.get(position).mInfo);
     holder.detail.setOnClickListener(new OnClickListener() {
       
       @Override
       public void onClick(View v) {
-        DetailActivity.startSelf(mAppContext, Utils.getTypeByPos(pos), mCurrentDate);
+        DetailActivity.startSelf(mAppContext, mData.get(pos).mType, mCurrentDate);
       }
     });
     return convertView;
   }
   
-  public void setData(ArrayList<String> data, int date) {
+  public void setData(ArrayList<HistoryItem> data, int date) {
     mData = data;
     mCurrentDate = date;
     notifyDataSetChanged();
