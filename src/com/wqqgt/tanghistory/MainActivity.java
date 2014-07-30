@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
@@ -35,6 +34,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
       @Override
       public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        changeDateHistory(itemPosition);
         return false;
       }
     });
@@ -69,7 +69,6 @@ public class MainActivity extends Activity implements OnClickListener {
     value.put(DBHelper.CLOUMN_TYPE, type);
     getContentResolver().insert(TangContentProvider.TANG_CONTENT_URI, value);
     showAddMsg(type);
-    initHistoryListAdapter();
   }
 
   public void showAddMsg(int type) {
@@ -118,6 +117,39 @@ public class MainActivity extends Activity implements OnClickListener {
         break;
     }
     return name;
+  }
+  
+  public void changeDateHistory(int pos) {
+    ArrayList<String> adapterData = new ArrayList<String>();
+    for (int i = 0; i < Utils.typeArray.length; i++) {
+      int curType = Utils.typeArray[i];
+      Cursor c;
+      if (pos == 0) {
+        c =
+            getContentResolver().query(
+                TangContentProvider.TANG_CONTENT_URI,
+                null,
+                DBHelper.CLOUMN_TYPE + "=?" + " AND " + DBHelper.CLOUMN_TIME
+                    + " > datetime('now','localtime','start of day')",
+                new String[] {Integer.toString(curType)}, null);
+
+      } else {
+        c =
+            getContentResolver().query(
+                TangContentProvider.TANG_CONTENT_URI,
+                null,
+                DBHelper.CLOUMN_TYPE + "=?" + " AND " + DBHelper.CLOUMN_TIME
+                    + " < datetime('now','localtime','start of day', '-"
+                    + Integer.toString(pos - 1) + " day')" + " AND " + DBHelper.CLOUMN_TIME
+                    + " > datetime('now','localtime','start of day', '-" + Integer.toString(pos)
+                    + " day')", new String[] {Integer.toString(curType)}, null);
+      }
+      if (c != null && c.moveToNext()) {
+        adapterData.add(getTypeName(curType) + " (" + c.getCount() + ") ");
+        c.close();
+      }
+    }
+    mAdapter.setData(adapterData);
   }
 
 }
